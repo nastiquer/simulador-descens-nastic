@@ -577,8 +577,8 @@
       ]
     },
     { j: "J36", rivals: ["18è Marbella FC (Fora)",     "16è SD Tarazona (Fora)",      "15è Nàstic (Casa)"] },
-    { j: "J37", rivals: ["13è Real Murcia (Casa)",     "5è CE Europa (Casa)",         "17è Betis Deportivo (Fora)"] },
-    { j: "J38", rivals: ["11è Antequera CF (Fora)",    "12è Hércules CF (Fora)",      "2n CE Sabadell (Casa)"] }
+    { j: "J37", rivals: ["13è Real Murcia (Casa)",     "5è CE Europa (Casa)",         "17è Betis Depor. (Fora)"] },
+    { j: "J38", rivals: ["11è Antequera CF (Fora)",    "12è Hércules (Fora)",         "2n CE Sabadell (Casa)"] }
   ];
 
   var BTNS = [
@@ -883,15 +883,15 @@
 
       if (aboveIdx === 2) {
         /* Tarazona per sobre — Torremolinos i Nàstic empatats */
-        applyBoth(0, "Pendents de Gol Average Global final a lliga", "taronja", false);
-        applyBoth(1, "Pendents de Gol Average Global final a lliga", "taronja", false);
+        applyBoth(0, "Pendents de Gol Avg Global final a lliga", "taronja", false);
+        applyBoth(1, "Pendents de Gol Avg Global final a lliga", "taronja", false);
       } else if (aboveIdx === 0) {
         /* Torremolinos per sobre — Tarazona i Nàstic empatats */
-        applyBoth(2, "Pendents de Gol Average Directe segons resultat J35", "taronja", false);
-        applyBoth(1, "Pendents de Gol Average Directe segons resultat J35", "taronja", false);
+        applyBoth(2, "Pendents de Gol Avg Directe segons J35", "taronja", false);
+        applyBoth(1, "Pendents de Gol Avg Directe segons J35", "taronja", false);
       } else if (aboveIdx === 1) {
         /* Nàstic per sobre — Tarazona descen per GA Directe */
-        applyBoth(2, "Descens per desempat (Gol Average Directe)", "vermell", true);
+        applyBoth(2, "Descens per desempat (Gol Avg Directe)", "vermell", true);
         applyBoth(0, "Permanència", "verd", false);
       }
     }
