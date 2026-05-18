@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulador de descens nastiquer 2025-2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    background: #ffffff;
+    padding: 32px 20px;
+  }
+
+  h1 {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 4px;
+  }
+
+  .subtitol {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    color: #666;
+    margin-bottom: 16px;
+  }
+
+  .page-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .content-wrap {
+    display: inline-block;
+    max-width: 100%;
+  }
+
+  .toolbar {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .btn-esborrar {
+    padding: 6px 16px;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    color: #555;
+    background: #ffd1d1;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .btn-esborrar:hover { background: #f0f0f0; border-color: #999; color: #333; }
+  .btn-esborrar:active { background: #e4e4e4; }
+
+
+
+
+  /* ═══════════════════════════════════════════════════
+     TAULA CALCULADORA (única per web i mòbil)
+     ═══════════════════════════════════════════════════ */
+
+  .calc-container {
+    max-width: 650px;
+    margin: 0 auto;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table.calc {
+    border-collapse: collapse;
+    width: 100%;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+    font-family: Arial, sans-serif;
+  }
+
+  /* Capçalera de la taula */
+  table.calc thead th {
+    background: #e8e8e8;
+    border: 1px solid #bbb;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #555;
+    text-align: center;
+  }
+
+  table.calc thead th:first-child { text-align: left; }
+  table.calc thead th:nth-child(2) { text-align: left; }
+
+  /* Cel·les generals */
+  table.calc tbody td {
+    border: 1px solid #bbb;
+    padding: 7px 10px;
+    vertical-align: middle;
+    font-size: 13px;
+  }
+
+  /* Columna Equip (posició + nom) */
+  .c-td-team {
+    white-space: nowrap;
+    font-weight: bold;
+    font-size: 13px;
+    color: #111;
+    background: #f5f5f5;
+    padding-left: 12px;
+  }
+
+  .c-td-team.nastic { color: #b00000; }
+  .c-td-team.descens-zone { background: #fff0f0; }
+
+  /* Columna Rival + Botons */
+  .c-td-rival {
+    padding: 6px 10px;
+  }
+
+  .c-rival-inner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+  }
+
+  .c-rival-name {
+    flex: 1;
+    font-size: 13px;
+    color: #333;
+  }
+
+  .c-btns {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .c-btn {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    background: #f5f5f5;
+    color: #555;
+    transition: background 0.1s, color 0.1s, border-color 0.1s;
+    line-height: 1;
+  }
+
+  .c-btn:hover:not(.active-v):not(.active-e):not(.active-d) { background: #e0e0e0; }
+  .c-btn.active-v { background: #1e6b1e; color: #fff; border-color: #1e6b1e; }
+  .c-btn.active-e { background: #b08000; color: #fff; border-color: #b08000; }
+  .c-btn.active-d { background: #a81c1c; color: #fff; border-color: #a81c1c; }
+
+  /* Columna Punts Final */
+  .c-td-pts {
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    color: #222;
+    width: 50px;
+    background: #fafafa;
+  }
+
+  .c-td-pts.descens { color: #a81c1c; background: #fff0f0; }
+
+  /* ═══════════════════════════════════════════════════
+     TEXT INFORMATIU + TAULA LIGUILLA + RESULTATS
+     ═══════════════════════════════════════════════════ */
+
+  .info-section {
+    margin-top: 22px;
+    font-family: Arial, sans-serif;
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+  }
+
+  .info-col-left { flex: 1; min-width: 0; }
+  .info-col-right { flex: 1; min-width: 0; }
+
+  .info-text {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .liguilla-title {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 18px;
+    margin-bottom: 8px;
+  }
+
+  .liguilla-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table.liguilla {
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    background: #fff;
+  }
+
+  table.liguilla th {
+    background: #e8e8e8;
+    border: 1px solid #bbb;
+    padding: 5px 10px;
+    text-align: center;
+    font-weight: bold;
+    color: #444;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  table.liguilla th:first-child { text-align: left; min-width: 150px; }
+
+  table.liguilla td {
+    border: 1px solid #bbb;
+    padding: 5px 10px;
+    text-align: center;
+    color: #333;
+    white-space: nowrap;
+  }
+
+  table.liguilla td:first-child { text-align: left; font-weight: bold; }
+  table.liguilla tr:nth-child(odd) td { background: #fafafa; }
+
+  /* Taula resultats Nàstic */
+  .resultats-title {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+  }
+
+  .resultats-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table.resultats {
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    background: #fff;
+    width: 100%;
+  }
+
+  table.resultats th {
+    background: #e8e8e8;
+    border: 1px solid #bbb;
+    padding: 5px 8px;
+    text-align: center;
+    font-weight: bold;
+    color: #444;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  table.resultats th:nth-child(2) { text-align: left; }
+
+  table.resultats td {
+    border: 1px solid #bbb;
+    padding: 5px 8px;
+    text-align: center;
+    color: #333;
+    white-space: nowrap;
+  }
+
+  table.resultats td:nth-child(2) { text-align: left; }
+  table.resultats tr:nth-child(odd) td { background: #fafafa; }
+
+  table.resultats tr.fila-nastic td {
+    background: #d4edda;
+    font-weight: bold;
+  }
+
+  /* ── FORMAT INDIVIDUAL PER CEL·LA ──────────────────────── */
+  /* Alcorcón (12) */
+  #rc-alc-v1  { background: #ffffff; color: #a81c1c; font-weight: bold; font-style: normal; }
+  #rc-alc-v2  { background: #ffffff; color: #e6a429; font-weight: bold; font-style: normal; }
+  #rc-alc-ga  { background: #ffb0b0; color: #444444; font-weight: bold; font-style: normal; }
+  
+  /* Juventud Torremolinos (13) */
+  #rc-tor-v1  { background: #ffffff; color: #a81c1c; font-weight: bold; font-style: normal; }
+  #rc-tor-v2  { background: #ffffff; color: #2da12d; font-weight: bold; font-style: normal; }
+  #rc-tor-ga  { background: #ffe4b3; color: #444444; font-weight: bold; font-style: normal; }
+
+  /* Real Murcia (14) */
+  #rc-mur-v1  { background: #ffffff; color: #a81c1c; font-weight: bold; font-style: normal; }
+  #rc-mur-v2  { background: #ffffff; color: #2da12d; font-weight: bold; font-style: normal; }
+  #rc-mur-ga  { background: #ffe4b3; color: #444444; font-weight: bold; font-style: normal; }
+
+  /* SD Tarazona (15) */
+  #rc-tar-v1  { background: #ffffff; color: #2da12d; font-weight: bold; font-style: normal; }
+  #rc-tar-v2  { background: #ffffff; color: #444444; font-weight: bold; font-style: normal; }
+  #rc-tar-ga  { background: #ffb0b0; color: #444444; font-weight: bold; font-style: normal; }
+
+  /* Betis Deportivo (17) */
+  #rc-bet-v1  { background: #ffffff; color: #e6a429; font-weight: bold; font-style: normal; }
+  #rc-bet-v2  { background: #ffffff; color: #e6a429; font-weight: bold; font-style: normal; }
+  #rc-bet-ga  { background: #ffe4b3; color: #444444; font-weight: bold; font-style: normal; }
+
+  /* Marbella FC (18) */
+  #rc-mar-v1  { background: #ffffff; color: #2da12d; font-weight: bold; font-style: normal; }
+  #rc-mar-v2  { background: #ffffff; color: #a81c1c; font-weight: bold; font-style: normal; }
+  #rc-mar-ga  { background: #ffb0b0; color: #444444; font-weight: bold; font-style: normal; }
+
+  /* At. Sanluqueño (19) */
+  #rc-san-v1  { background: #ffffff; color: #a81c1c; font-weight: bold; font-style: normal; }
+  #rc-san-v2  { background: #ffffff; color: #a81c1c; font-weight: bold; font-style: normal; }
+  #rc-san-ga  { background: #ffb0b0; color: #444444; font-weight: bold; font-style: normal; }
+
+  /* Sevilla At. (20) */
+  #rc-sev-v1  { background: #ffffff; color: #2da12d; font-weight: bold; font-style: normal; }
+  #rc-sev-v2  { background: #ffffff; color: #2da12d; font-weight: bold; font-style: normal; }
+  #rc-sev-ga  { background: #cbedc0; color: #444444; font-weight: bold; font-style: normal; }
+
+
+
+  /* ═══════════════════════════════════════════════════
+     MEDIA QUERY MÒBIL
+     ═══════════════════════════════════════════════════ */
+
+  @media (max-width: 768px) {
+    body { padding: 16px 12px; }
+    h1 { font-size: 16px; }
+    .subtitol { font-size: 12px; margin-bottom: 12px; }
+
+    table.calc tbody td { padding: 5px 6px; font-size: 12px; }
+    .c-td-team { font-size: 12px; padding-left: 8px; }
+    .c-rival-inner { gap: 6px; }
+    .c-rival-name { font-size: 12px; }
+    .c-btn { width: 30px; height: 30px; font-size: 12px; }
+    .c-td-pts { font-size: 15px; width: 42px; }
+
+    .info-section { flex-direction: column; gap: 16px; }
+    .info-text { font-size: 11px; }
+    table.resultats { font-size: 11px; }
+    table.resultats th { font-size: 10px; padding: 4px 6px; }
+    table.resultats td { padding: 4px 6px; }
+    table.liguilla { font-size: 11px; }
+    table.liguilla th { font-size: 10px; padding: 4px 7px; }
+    table.liguilla td { padding: 4px 7px; }
+    table.liguilla th:first-child { min-width: 120px; }
+  }
+
+</style>
+</head>
+<body>
+
+<h1>Simulador de descens nastiquer 2025-2026</h1>
+<p class="subtitol">Vols pronosticar si jugarem a 2a RFEF? Omple tots els resultats per obtenir els possibles escenaris, fes captura i comparteix!</p>
+
+<div class="page-wrap">
+<div class="content-wrap">
+
+<div class="toolbar">
+  <button class="btn-esborrar" onclick="esborrarTot()">Esborrar</button>
+</div>
+
+
+<div class="calc-container">
+  <table class="calc">
+    <thead>
+      <tr>
+        <th>Equip</th>
+        <th>Jornada 38</th>
+        <th>Pts</th>
+      </tr>
+    </thead>
+    <tbody id="calc-body"></tbody>
+  </table>
+</div>
+
+<div class="info-section">
+
+  <div class="info-col-left">
+    <div class="info-text">
+      Criteris en cas d'empat a punts en la classificació final, entre dos equips:<br>
+      1) Gol average dels enfrontaments directes entre els dos equips<br>
+      2) Gol average global a la lliga<br>
+      3) Major nombre gols a favor<br>
+      <br>
+      Criteris en cas d'empat a punts en la classificació final, entre tres equips o més:<br>
+      1) Liguilla entre els equips
+    </div>
+
+    <div class="liguilla-title">Liguilla - Estat actual a J37</div>
+    <div class="liguilla-scroll">
+    <table class="liguilla">
+      <thead>
+        <tr><th>Equip</th><th>PTS</th><th>PJ</th><th>PG</th><th>PE</th><th>PP</th><th>GF</th><th>GC</th><th>DG</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Juv. Torremolinos</td><td>7</td><td>4</td><td>2</td><td>1</td><td>1</td><td>4</td><td>3</td><td>1</td></tr>
+        <tr><td>Nàstic Tarragona</td><td>6</td><td>4</td><td>2</td><td>0</td><td>2</td><td>4</td><td>5</td><td>-1</td></tr>
+        <tr><td>SD Tarazona</td><td>4</td><td>4</td><td>1</td><td>1</td><td>2</td><td>2</td><td>4</td><td>0</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="info-col-right">
+    <div class="resultats-title">J36 - Resultats del Nàstic contra...</div>
+    <div class="resultats-scroll">
+    <table class="resultats">
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th>Punts</th>
+          <th>1a volta</th>
+          <th>2a volta</th>
+          <th>Gol average</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>12</td>
+          <td>Alcorcón</td>
+          <td>47</td>
+          <td id="rc-alc-v1">1-2</td>
+          <td id="rc-alc-v2">1-1</td>
+          <td id="rc-alc-ga">Perdut 2-3</td>
+        </tr>
+        <tr>
+          <td>13</td>
+          <td>Juventud Torremolinos</td>
+          <td>46</td>
+          <td id="rc-tor-v1">2-0</td>
+          <td id="rc-tor-v2">2-0</td>
+          <td id="rc-tor-ga">Empat 2-2</td>
+        </tr>
+        <tr>
+          <td>14</td>
+          <td>Real Murcia</td>
+          <td>46</td>
+          <td id="rc-mur-v1">2-3</td>
+          <td id="rc-mur-v2">2-1</td>
+          <td id="rc-mur-ga">Empat 4-4</td>
+        </tr>
+        <tr>
+          <td>15</td>
+          <td>SD Tarazona</td>
+          <td>45</td>
+          <td id="rc-tar-v1">2-1</td>
+          <td id="rc-tar-v2">2-0</td>
+          <td id="rc-tar-ga">Perdut 2-3</td>
+        </tr>
+        <tr class="fila-nastic">
+          <td>16</td>
+          <td>Gimnàstic Tarragona</td>
+          <td>43</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>17</td>
+          <td>Betis Deportivo</td>
+          <td>41</td>
+          <td id="rc-bet-v1">2-2</td>
+          <td id="rc-bet-v2">2-2</td>
+          <td id="rc-bet-ga">Empat 4-4</td>
+        </tr>
+        <tr>
+          <td>18</td>
+          <td>Marbella FC</td>
+          <td>31</td>
+          <td id="rc-mar-v1">1-0</td>
+          <td id="rc-mar-v2">2-0</td>
+          <td id="rc-mar-ga">Perdut 1-2</td>
+        </tr>
+        <tr>
+          <td>19</td>
+          <td>At. Sanluqueño</td>
+          <td>29</td>
+          <td id="rc-san-v1">1-3</td>
+          <td id="rc-san-v2">1-0</td>
+          <td id="rc-san-ga">Perdut 1-4</td>
+        </tr>
+        <tr>
+          <td>20</td>
+          <td>Sevilla At.</td>
+          <td>27</td>
+          <td id="rc-sev-v1">1-2</td>
+          <td id="rc-sev-v2">2-1</td>
+          <td id="rc-sev-ga">Guanyat 4-2</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+</div>
+
+</div>
+</div>
+
+
+</div>
+</div>
+
+<script>
+  var TEAMS = [
+    { pts: 49, pos: "12è", name: "Real Murcia",         cls: "",       rival: "Eldense (Casa)" },
+    { pts: 49, pos: "13è", name: "CD Teruel",            cls: "",       rival: "(Pendent)" },
+    { pts: 46, pos: "14è", name: "Juv. Torremolinos",    cls: "",       rival: "Antequera CF (Fora)" },
+    { pts: 46, pos: "15è", name: "Nàstic",               cls: "nastic", rival: "Alcorcón (Fora)" },
+    { pts: 45, pos: "16è", name: "Tarazona",             cls: "",       rival: "CE Sabadell (Casa)" },
+    { pts: 44, pos: "17è", name: "Betis Dep.",            cls: "",       rival: "Cartagena (Fora)" }
+  ];
+
+  var BTNS = [
+    { val: 3, label: "V", btnCls: "active-v" },
+    { val: 1, label: "E", btnCls: "active-e" },
+    { val: 0, label: "D", btnCls: "active-d" }
+  ];
+
+  /* sel[teamIdx] = null | 3 | 1 | 0 */
+  var sel = TEAMS.map(function() { return null; });
+
+  function buildTable() {
+    var tbody = document.getElementById("calc-body");
+    TEAMS.forEach(function(team, ti) {
+      var tr = document.createElement("tr");
+
+      /* Columna equip */
+      var tdTeam = document.createElement("td");
+      tdTeam.className = "c-td-team" + (team.cls ? " " + team.cls : "");
+      tdTeam.textContent = team.pos + " " + team.name;
+      tr.appendChild(tdTeam);
+
+      /* Columna rival + botons */
+      var tdRival = document.createElement("td");
+      tdRival.className = "c-td-rival";
+      var inner = document.createElement("div");
+      inner.className = "c-rival-inner";
+      var rn = document.createElement("span");
+      rn.className = "c-rival-name";
+      rn.textContent = team.rival;
+      inner.appendChild(rn);
+      var bd = document.createElement("div");
+      bd.className = "c-btns";
+      BTNS.forEach(function(b) {
+        var btn = document.createElement("button");
+        btn.className = "c-btn";
+        btn.textContent = b.label;
+        btn.addEventListener("click", function() {
+          sel[ti] = (sel[ti] === b.val) ? null : b.val;
+          updateAll();
+        });
+        bd.appendChild(btn);
+      });
+      inner.appendChild(bd);
+      tdRival.appendChild(inner);
+      tr.appendChild(tdRival);
+
+      /* Columna punts finals */
+      var tdPts = document.createElement("td");
+      tdPts.className = "c-td-pts";
+      tdPts.id = "pts-" + ti;
+      tdPts.textContent = team.pts;
+      tr.appendChild(tdPts);
+
+      tbody.appendChild(tr);
+    });
+  }
+
+  function updateAll() {
+    TEAMS.forEach(function(team, ti) {
+      var v = sel[ti];
+      var total = team.pts + (v !== null ? v : 0);
+
+      /* Actualitzar botons */
+      var row = document.getElementById("calc-body").rows[ti];
+      row.querySelectorAll(".c-btn").forEach(function(btn, bi) {
+        btn.classList.remove("active-v", "active-e", "active-d");
+        if (v !== null && BTNS[bi].val === v) btn.classList.add(BTNS[bi].btnCls);
+      });
+
+      /* Actualitzar punts */
+      var ptsEl = document.getElementById("pts-" + ti);
+      ptsEl.textContent = total;
+      ptsEl.className = "c-td-pts";
+    });
+  }
+
+  function esborrarTot() {
+    sel = TEAMS.map(function() { return null; });
+    updateAll();
+  }
+
+  buildTable();
+</script>
+</body>
+</html>
