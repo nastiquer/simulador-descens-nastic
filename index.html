@@ -91,9 +91,9 @@
     background: #e8e8e8;
     border: 1px solid #bbb;
     padding: 6px 10px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
-    color: #555;
+    color: #111;
     text-align: center;
   }
 
@@ -113,7 +113,7 @@
     white-space: nowrap;
     font-weight: bold;
     font-size: 13px;
-    color: #111;
+    color: #4d4b4b;
     background: #f5f5f5;
     padding-left: 12px;
   }
@@ -169,7 +169,7 @@
   .c-td-pts {
     text-align: center;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
     color: #222;
     width: 50px;
     background: #fafafa;
@@ -292,7 +292,7 @@
   table.resultats tr:nth-child(odd) td { background: #fafafa; }
 
   table.resultats tr.fila-nastic td {
-    background: #d4edda;
+    background: #e8e8e8;
     font-weight: bold;
   }
 
@@ -308,9 +308,9 @@
   #rc-tor-ga  { background: #ffe4b3; color: #444444; font-weight: bold; font-style: normal; }
 
   /* Real Murcia (14) */
-  #rc-mur-v1  { background: #ffffff; color: #a81c1c; font-weight: bold; font-style: normal; }
-  #rc-mur-v2  { background: #ffffff; color: #2da12d; font-weight: bold; font-style: normal; }
-  #rc-mur-ga  { background: #ffe4b3; color: #444444; font-weight: bold; font-style: normal; }
+  #rc-ter-v1  { background: #ffffff; color: #a81c1c; font-weight: bold; font-style: normal; }
+  #rc-ter-v2  { background: #ffffff; color: #2da12d; font-weight: bold; font-style: normal; }
+  #rc-ter-ga  { background: #ffe4b3; color: #444444; font-weight: bold; font-style: normal; }
 
   /* SD Tarazona (15) */
   #rc-tar-v1  { background: #ffffff; color: #2da12d; font-weight: bold; font-style: normal; }
@@ -398,6 +398,8 @@
 
   <div class="info-col-left">
     <div class="info-text">
+      Empat a punts TORREMOLINOS-TARAZONA-NÀSTIC: descens del Tarazona per Lligueta
+      <br>
       Criteris en cas d'empat a punts en la classificació final, entre dos equips:<br>
       1) Gol average dels enfrontaments directes entre els dos equips<br>
       2) Gol average global a la lliga<br>
@@ -407,7 +409,7 @@
       1) Liguilla entre els equips
     </div>
 
-    <div class="liguilla-title">Liguilla - Estat actual a J37</div>
+    <div class="liguilla-title">Liguilla - Triple empat JUV-NÀS-TAR</div>
     <div class="liguilla-scroll">
     <table class="liguilla">
       <thead>
@@ -423,7 +425,7 @@
   </div>
 
   <div class="info-col-right">
-    <div class="resultats-title">J36 - Resultats del Nàstic contra...</div>
+    <div class="resultats-title">J38 - Resultats del Nàstic contra...</div>
     <div class="resultats-scroll">
     <table class="resultats">
       <thead>
@@ -439,22 +441,6 @@
       <tbody>
         <tr>
           <td>12</td>
-          <td>Alcorcón</td>
-          <td>47</td>
-          <td id="rc-alc-v1">1-2</td>
-          <td id="rc-alc-v2">1-1</td>
-          <td id="rc-alc-ga">Perdut 2-3</td>
-        </tr>
-        <tr>
-          <td>13</td>
-          <td>Juventud Torremolinos</td>
-          <td>46</td>
-          <td id="rc-tor-v1">2-0</td>
-          <td id="rc-tor-v2">2-0</td>
-          <td id="rc-tor-ga">Empat 2-2</td>
-        </tr>
-        <tr>
-          <td>14</td>
           <td>Real Murcia</td>
           <td>46</td>
           <td id="rc-mur-v1">2-3</td>
@@ -462,25 +448,41 @@
           <td id="rc-mur-ga">Empat 4-4</td>
         </tr>
         <tr>
+          <td>13</td>
+          <td>CD Teruel</td>
+          <td>49</td>
+          <td id="rc-ter-v1">0-1</td>
+          <td id="rc-ter-v2">1-0</td>
+          <td id="rc-ter-ga">Perdut 0-2</td>
+        </tr>
+        <tr>
+          <td>14</td>
+          <td>Juv. Torrem.</td>
+          <td>46</td>
+          <td id="rc-tor-v1">2-0</td>
+          <td id="rc-tor-v2">2-0</td>
+          <td id="rc-tor-ga">Empat 2-2</td>
+        </tr>
+        <tr class="fila-nastic">
           <td>15</td>
+          <td>Nàstic</td>
+          <td>46</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>16</td>
           <td>SD Tarazona</td>
           <td>45</td>
           <td id="rc-tar-v1">2-1</td>
           <td id="rc-tar-v2">2-0</td>
           <td id="rc-tar-ga">Perdut 2-3</td>
         </tr>
-        <tr class="fila-nastic">
-          <td>16</td>
-          <td>Gimnàstic Tarragona</td>
-          <td>43</td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
         <tr>
-          <td>17</td>
-          <td>Betis Deportivo</td>
-          <td>41</td>
+         <td>17</td>
+          <td>Betis Dep.</td>
+          <td>44</td>
           <td id="rc-bet-v1">2-2</td>
           <td id="rc-bet-v2">2-2</td>
           <td id="rc-bet-ga">Empat 4-4</td>
@@ -496,7 +498,7 @@
         <tr>
           <td>19</td>
           <td>At. Sanluqueño</td>
-          <td>29</td>
+          <td>30</td>
           <td id="rc-san-v1">1-3</td>
           <td id="rc-san-v2">1-0</td>
           <td id="rc-san-ga">Perdut 1-4</td>
@@ -525,12 +527,12 @@
 
 <script>
   var TEAMS = [
-    { pts: 49, pos: "12è", name: "Real Murcia",         cls: "",       rival: "Eldense (Casa)" },
-    { pts: 49, pos: "13è", name: "CD Teruel",            cls: "",       rival: "(Pendent)" },
-    { pts: 46, pos: "14è", name: "Juv. Torremolinos",    cls: "",       rival: "Antequera CF (Fora)" },
-    { pts: 46, pos: "15è", name: "Nàstic",               cls: "nastic", rival: "Alcorcón (Fora)" },
-    { pts: 45, pos: "16è", name: "Tarazona",             cls: "",       rival: "CE Sabadell (Casa)" },
-    { pts: 44, pos: "17è", name: "Betis Dep.",            cls: "",       rival: "Cartagena (Fora)" }
+    { pts: 49, pos: "12è", name: "Real Murcia",         cls: "",       rival: "1r Eldense (Casa)" },
+    { pts: 49, pos: "13è", name: "CD Teruel",            cls: "",       rival: "18è Marbella (fora)" },
+    { pts: 46, pos: "14è", name: "Juv. Torrem.",    cls: "",       rival: "8è Antequera (Fora)" },
+    { pts: 46, pos: "15è", name: "Nàstic",               cls: "nastic", rival: "9è Hércules (Fora)" },
+    { pts: 45, pos: "16è", name: "Tarazona",             cls: "",       rival: "2n CE Sabadell (Casa)" },
+    { pts: 44, pos: "17è", name: "Betis Dep.",            cls: "",       rival: "6è Cartagena (Fora)" }
   ];
 
   var BTNS = [
